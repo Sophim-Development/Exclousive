@@ -1,0 +1,84 @@
+@model IEnumerable<Exclousive.Models.Product>
+
+<div class="container mx-auto mt-4">
+  <h2 class="text-2xl font-semibold mb-4">@ViewData["Title"]</h2>
+  <a asp-action="Create" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Add New Product</a>
+
+  <table class="min-w-full mt-4 bg-white border border-gray-300 rounded-lg shadow">
+    <thead>
+      <tr class="bg-gray-100 text-gray-700">
+        <th class="py-2 px-4 border-b">#</th>
+        <th class="py-2 px-4 border-b">Product Name</th>
+        <th class="py-2 px-4 border-b">Description</th>
+        <th class="py-2 px-4 border-b">Price</th>
+        <th class="py-2 px-4 border-b">On Sale</th>
+        <th class="py-2 px-4 border-b">Actions</th>
+      </tr>
+    </thead>
+    <tbody class="text-center">
+      @{
+        int index = 1; // Initialize an index variable
+      }
+      @foreach (var product in Model)
+      {
+        <tr class="hover:bg-gray-100">
+          <td class="py-2 px-4 border-b">@index</td>
+          <td class="py-2 px-4 border-b">@product.Name</td>
+          <td class="py-2 px-4 border-b">@product.Description</td>
+          <td class="py-2 px-4 border-b">@product.Price.ToString("C",
+          System.Globalization.CultureInfo.GetCultureInfo("en-US"))</td>
+          @if (@product.IsOnSale)
+          {
+            <td class="py-2 px-4 border-b text-green-500">Yes</td>
+          }
+          else
+          {
+            <td class="py-2 px-4 border-b text-gray-500">No</td>
+          }
+          <td class="py-2 px-4 border-b">
+            <a href="@Url.Action("Details", "Products", new { id = product.Id })"
+              class="bg-blue-300 text-white px-2 py-1 rounded hover:bg-blue-400"><i class="fas fa-eye"></i> View</a>
+            <a href="@Url.Action("Edit", "Products", new { id = product.Id })"
+              class="bg-yellow-300 text-white px-2 py-1 rounded hover:bg-yellow-400"><i class="fas fa-edit"></i> Edit</a>
+            <div class="inline-block">
+              <input type="checkbox" id="delete-popup-@product.Id" class="hidden" />
+              <label for="delete-popup-@product.Id"
+                class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 cursor-pointer">
+                <i class="fas fa-trash"></i> Delete
+              </label>
+
+              <!-- Popup -->
+              <div class="fixed inset-0 items-center justify-center bg-black bg-opacity-50 hidden" id="popup-@product.Id">
+                <div class="bg-white p-6 rounded-lg shadow-md max-w-md w-full">
+                  <h2 class="text-xl font-semibold text-gray-800 mb-4">Delete Product</h2>
+                  <p class="text-gray-600 mb-6">
+                    Are you sure you want to delete the product: <span class="font-bold">@product.Name</span>?
+                  </p>
+                  <div class="flex justify-between">
+                    <form asp-action="DeleteConfirmed" asp-route-id="@product.Id" method="post">
+                      <button type="submit" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded">
+                        Delete
+                      </button>
+                    </form>
+                    <label for="delete-popup-@product.Id"
+                      class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded cursor-pointer">
+                      Cancel
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <style>
+                /* Display popup when checkbox is checked */
+                #delete-popup-@product.Id:checked+label+div {
+                  display: flex;
+                }
+              </style>
+            </div>
+          </td>
+        </tr>
+        index++;
+      }
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,9 @@
+@model IEnumerable<Product>
+
+<div class="container mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+  @foreach (var product in Model)
+  {
+      <!-- Render the Product Card for each product -->
+    @Html.Partial("~/Views/Components/_ProductCard.cshtml", product)
+  }
+</div>

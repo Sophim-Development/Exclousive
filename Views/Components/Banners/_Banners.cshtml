@@ -1,0 +1,18 @@
+@* @model IEnumerable<Banner> *@
+<div class="flex py-6">
+  <!-- Left-side Menu -->
+  @Html.Partial("~/Views/Components/_MenuLeft.cshtml")
+
+  <div class="border mx-5 border-2-gray-300"></div>
+
+  <!-- Right-side Banner -->
+  <!-- Render the Product Card for each product -->
+  @Html.Partial("~/Views/Components/Banners/_BannerCard.cshtml")
+  @* <div class="container mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    @foreach (var banner in Model)
+    {
+      <!-- Render the Product Card for each product -->
+      @Html.Partial("~/Views/Components/Banners/_BannerCard.cshtml")
+    }
+  </div> *@
+</div>

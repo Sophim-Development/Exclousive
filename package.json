@@ -1,0 +1,11 @@
+{
+  "devDependencies": {
+    "tailwindcss": "^3.4.14"
+  },
+  "scripts": {
+    "build:css": "tailwindcss build ./wwwroot/css/tailwind.css -o ./wwwroot/css/site.css"
+  },
+  "dependencies": {
+    "flowbite": "^2.5.2"
+  }
+}
